@@ -8,17 +8,32 @@ const app = express();
 
 app.use(logger("dev"));
 
-const PORT = process.env.PORT ||3636
+const PORT = process.env.PORT || 3636
 
 
 
 
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/dbExample", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true  });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 // API Routes
 // POST /api/Workouts
+app.post("/api/workouts", function (req, res) {
+    const newWorkout = new Workout(req.body);
+    Workout.create(newWorkout)
+    .then(dbWorkout => {
+        
+        res.json(dbWorkout);
+      })
+      .catch(err => {
+        
+        res.json(err);
+      });
+
+});
+
 // PUT /api/workouts/:id
+
 // GET /api/workouts/range
 
 
@@ -28,15 +43,15 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/dbExample", { u
 app.use(express.static("public"));
 
 
-app.get("/", (req, res)=> {
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-app.get("/exercise", (req, res)=> {
+app.get("/exercise", (req, res) => {
     res.sendFile(path.join(__dirname, "public/exercise.html"));
 });
 
-app.get("/stats", (req, res)=> {
+app.get("/stats", (req, res) => {
     res.sendFile(path.join(__dirname, "public/stats.html"));
 });
 
