@@ -21,20 +21,55 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
 app.post("/api/workouts", function (req, res) {
     const newWorkout = new Workout(req.body);
     Workout.create(newWorkout)
-    .then(dbWorkout => {
-        
-        res.json(dbWorkout);
-      })
-      .catch(err => {
-        
-        res.json(err);
-      });
+        .then(dbWorkout => {
+
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+
+            res.json(err);
+        });
 
 });
 
-// PUT /api/workouts/:id
+app.get("/api/workouts", (req, res) => {
+    Workout.find({})
+        .then(dbWorkout => {
+
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+
+            res.json(err);
+        });
+
+});
+
+// // PUT /api/workouts/:id
+
+
+
 
 // GET /api/workouts/range
+app.get("/api/workouts/range", (req, res) => {
+    Workout.find({})
+        .limit(7)
+        .then(dbWorkout => {
+
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+
+            res.json(err);
+        });
+
+});
+
+
+
+
+
+
 
 
 
