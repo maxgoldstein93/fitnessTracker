@@ -28,25 +28,28 @@ app.get("/api/workouts", (req, res) => {
           console.log(err);
         } else {
             // loop through all data add total and assign to variable durtion
-            
-            // for(var i = 0; i < data.length; i ++){
-
-            //       var newObj = data[i]
-
+            // let totalDuration = 0;
+            // for(var i =0; i < data.length;i++){
+            //     totalDuration += data[i].exercises[0].duration
+            //     console.log(data[i].exercises[0].duration)
             // }
-            // console.log(newObj+"LOOOK")
-           
+            // console.log(totalDuration)
+            // for(var i = 0; i < data.length; i ++){
+            //     data[i].exercises[0].totalDuration = totalDuration
+            // }
 
-            // const newData = {
+            // const newArr = {
             //     _id: data._id,
             //     day: data.day,
             //     exercises: data.exercises,
             //     weight: data.weight,
             //     sets: data.sets,
             //     reps: data.reps,
-            //     // totalDuration: duration
+            //     totalDuration: totalDuration
             // }
-            // console.log(newData)
+            // data.totalDuration = totalDuration
+            // console.log(data)
+           
           res.json(data);
         }
       });
@@ -54,16 +57,14 @@ app.get("/api/workouts", (req, res) => {
 });
 
 
-// Working
+
 app.post("/api/workouts", function (req, res) {
     
-    // const newWorkout = new Workout(req.body);
-    // console.log(newWorkout)
+    
     Workout.create({})
 
         .then(dbWorkout => {
-            console.log("NEW WORKY")
-            console.log(dbWorkout)
+           
             res.json(dbWorkout);
             
         })
@@ -79,8 +80,7 @@ app.post("/api/workouts", function (req, res) {
 app.put("/api/workouts/:id", (req,res)=>{
     
     const id = req.params.id
-    console.log(req.body)
-    console.log(id + "LOOK HERE$$$###$$$")
+   
     Workout.findByIdAndUpdate( id,
         {$push: {exercises: req.body}},
         {new: true})
@@ -98,7 +98,7 @@ app.put("/api/workouts/:id", (req,res)=>{
 
 
 // GET /api/workouts/range
-// Working
+
 app.get("/api/workouts/range", (req, res) => {
     
     Workout.find({}, (err, data) => {
@@ -121,7 +121,7 @@ app.get("/api/workouts/range", (req, res) => {
 
 // HTML ROUTES
 app.use(express.static("public"));
-// require("./routes/htmlroutes")(app);
+
 
 
 app.get("/", (req, res) => {

@@ -23,30 +23,35 @@ const WorkoutSchema = new Schema({
             trim:true,
             required: true
         },
-        disatance: {
+        distance: {
             type: Number,
             trim:true,
-            required: true
+            
         },
         weight: {
             type: Number,
             trim:true,
-            required: true
+            
         },
         reps: {
             type: Number,
             trim:true,
-            required: true
+            
         },
         sets: {
             type: Number,
             trim:true,
-            required: true
+            
         }
     }]
-
-
-});
+},
+ { toJSON: { virtuals: true } }
+);
+WorkoutSchema.virtual('totalDuration').get(function() {
+    return this.exercises.reduce((accumulator, increment)=>{
+        return accumulator + increment.duration
+    },0);
+  });
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
